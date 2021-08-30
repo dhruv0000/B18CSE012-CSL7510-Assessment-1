@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Class Attendance</title>
+</head>
+
+<body>
+  <h1>Class Attendance</h1>
+  <!-- 
+    This section of the document specifies the table that will
+    be used to display the list of students.
+   -->
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>RollNo</th>
+      <th>Attendance</th>
+    </tr>
+    </tr>
+  </table>
+  <br/>
+
+  <iframe name="hiddenFrame" width="0" height="0" border="0" style="display: none;"></iframe>
+
+  <form action="/post-users" method="post" target="hiddenFrame" >
+    Name:
+    <input type="text" name="Name" id="Name">
+    <br/> RollNo:
+    <input type="text" name="RollNo">
+    <br/> Attendance:
+    <input type="text" name="Attendance">
+    <br/>
+    <input type="submit" value="Submit">
+  </form>
+
+  <!-- 
+    Finally, the last section is the script that will
+    run on each page load to fetch the list of users
+    and add them to our existing table
+   -->
+  <script>
+    userTable = document.querySelector("table")
+
+    fetch("/users")
+      .then(response => response.json())
+      .then(userList => {
+        console.log(userList)
+        userList.forEach(user => {
+          row = document.createElement("tr")
+
+          usrname = document.createElement("td")
+          usrname.innerHTML = user.Name
+          rollNo = document.createElement("td")
+          rollNo.innerHTML = user.RollNo
+          attendace = document.createElement("td")
+          attendace.innerHTML = user.Attendance
+
+          row.appendChild(usrname)
+          row.appendChild(rollNo)
+          row.appendChild(attendace)
+          
+          userTable.appendChild(row)
+        })
+      })
+  </script>
+</body>
+
+</html>
