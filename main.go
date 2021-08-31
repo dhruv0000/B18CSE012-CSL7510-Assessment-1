@@ -9,8 +9,8 @@ import (
 
 	"github.com/gorilla/mux"
 
-	"gorm.io/driver/postgres"
 	_ "gorm.io/driver/postgres"
+	"gorm.io/driver/sqlite"
 	_ "gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 
@@ -47,11 +47,11 @@ func main() {
 	router := mux.NewRouter()
 
 	// Postgres
-	dsn := "host=localhost user=postgres password=Pass2020! dbname=postgres port=5432 sslmode=disable"
-	db, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	// dsn := "host=localhost user=postgres password=Pass2020! dbname=postgres port=5432 sslmode=disable"
+	// db, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
 
 	// SQLite
-	// db, err = gorm.Open(sqlite.Open("test.db"), &gorm.Config{})
+	db, err = gorm.Open(sqlite.Open("test.db"), &gorm.Config{})
 
 	if err != nil {
 
