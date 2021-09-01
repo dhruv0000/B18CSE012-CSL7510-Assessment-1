@@ -13,18 +13,34 @@ https://youtu.be/hw9YdIAC7Ow
 The dockerfile has 12 steps discussed below:
 
 1. ```dockerfile
-    FROM golang:1.16
+    FROM alpine:latest
     ```
 
-    We are creating our image using the base image golang:1.16. 
+    We are creating our image using the base image alpine:latest since Alpine version of Lixux has less image size.
 
 2. ```dockerfile
+   RUN apk add --no-cache git make musl-dev go
+   ```
+
+   Installing golang and its dependencies
+
+3. ```dockerfile
+    ENV GOROOT /usr/lib/go
+    ENV GOPATH /go
+    ENV PATH /go/bin:$PATH
+    RUN mkdir -p ${GOPATH}/src ${GOPATH}/bin
+
+   ```
+
+   Setting up golang configuration.
+
+4. ```dockerfile
    WORKDIR /src
    ```
 
    Move to working directory /src where we will copy our codebase
 
-3. ```dockerfile
+5. ```dockerfile
     COPY go.mod ./
     COPY go.sum ./
     RUN go mod download
@@ -32,25 +48,25 @@ The dockerfile has 12 steps discussed below:
 
    We copy the dependency files to the container and download the golang dependencies.
 
-4. ```dockerfile
+6. ```dockerfile
     COPY . ./
    ```
 
    Copy the rest of codebase to the working directory.
 
-5. ```dockerfile
+7. ```dockerfile
     RUN go build -o /main main.go
    ```
 
    Build the application and save the binary at `/main`
 
-7. ```dockerfile
+8. ```dockerfile
     EXPOSE 8080
    ```
 
    The app uses port 8080, so we expose that port from inside the container to the outside.
 
-7. ```dockerfile
+9. ```dockerfile
     CMD ["/main"]
    ```
 

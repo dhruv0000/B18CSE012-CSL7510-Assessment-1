@@ -1,5 +1,15 @@
 # Using alpine version since it has less image size
-FROM golang:1.16
+FROM alpine:latest
+
+# Installing golang and its dependencies
+RUN apk add --no-cache git make musl-dev go
+
+# Configure Go
+ENV GOROOT /usr/lib/go
+ENV GOPATH /go
+ENV PATH /go/bin:$PATH
+RUN mkdir -p ${GOPATH}/src ${GOPATH}/bin
+
 
 # Move to working directory /src
 WORKDIR /src
