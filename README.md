@@ -10,7 +10,7 @@ https://youtu.be/hw9YdIAC7Ow
 
 ### Dockerfile
 
-The dockerfile has 12 steps discussed below:
+The dockerfile has 9 steps discussed below:
 
 1. ```dockerfile
     FROM alpine:latest
